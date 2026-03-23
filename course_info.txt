@@ -1,0 +1,83 @@
+# ================================================================
+#  COURSE INFO FILE — HY CAT Course Bot
+# ================================================================
+#  YAHAN SIRF COURSE KI DETAILS LIKHO
+#  Jab bhi koi update karna ho — bas yahan badlo aur save karo
+#  Bot band karke dobara chalao — nai info automatically load hogi
+#
+#  NOTE: # se shuru hone wali lines ignore hoti hain (comments)
+# ================================================================
+
+TEAM_NAME: HY MBA(We are Course Provider Team)
+
+COURSE_NAME: Elites Grid Official CAT Course
+
+ORIGINAL_PRICE: 1200
+
+OFFER_PRICE: 999
+
+SPECIFIC_PART_DISCOUNT_PRICE: 899
+
+VARC_AARAMBH_PRICE: 499
+
+ELITES_GRID_OFFICIAL_PRICE: 40000
+
+CAT_2024_COURSE_PRICE: 799
+
+PAID_MEMBERS: 300+
+
+DEMO_MEMBERS: 800+
+
+EG_DEMO_LINK: https://t.me/+E-kryNG1J0U3NzU1
+
+OTHER_DEMO_LINK: https://t.me/+Dm_7ZH7XPNwzMTk1
+
+PAYMENT_LINK: https://hycourse.mojo.page/exclusive-cat-course-
+
+ADMIN_LINK: t.me/hymbaadmin
+
+COURSE_DETAILS:
+- Yeh Elites Grid ka official completed CAT course hai jo unki website par 40,000 mein milta hai
+- Hum yeh course sirf 999 mein de rahe hain (original price 1200, abhi special offer chal raha hai)
+- Course mein included hai: VARC, LRDI, Quants ke recorded video lectures
+- Mock tests, Notes, SIMCAT, aur Knockout sessions bhi included hain
+- Yeh LIVE course nahi hai — completed/recorded course hai
+- Course 2025 batch ka hai
+- Payment ke baad full course ek Telegram group mein sequence-wise arranged milega
+- One time payment mein lifetime access milegi
+- Humara complete backup hai isliye koi tension nahi
+
+CAT_2024_COURSE_DETAILS:
+- 2024 completed course bhi available hai sirf 799 mein
+- 2024 wale course mein OMETS bhi included hai
+- Jyadatar jo OMETS chahiye unhe 2024 wala recommend karo
+
+VARC_SPECIAL:
+- VARC Aarambh aur VARC 1000 bhi available hain separately
+- Inki price 499 hai
+- Demo links mein available hain — khud se mention mat karna, sirf tab batana jab student pooche
+
+WHAT_IS_NOT_AVAILABLE:
+- Rodha coaching nahi hai hamare paas
+- Quants (alag coaching) nahi hai hamare paas
+- Agar koi Rodha ya alag Quants maange to politely bolna: "Sir abhi yeh available nahi hai hamare paas, lekin Elites Grid ka course bahut better hai, usme sab cover hota hai"
+
+HOW_TO_HANDLE_SPECIFIC_SITUATIONS:
+- Koi EG ka specific part maange (jaise sirf LRDI): "Sir full course ek group mein sequence-wise arranged hai, specific part alag nahi milta. Lekin aapko specific part chahiye isliye 10% discount de sakta hoon — sirf 899 mein full course le sakte ho"
+- Koi 899 se bhi kam karne ki 5-6 baar koshish kare: "Sir main admin se baat karwa deta hoon aapki — t.me/hymbaadmin pe contact karo"
+- Koi pooche course kahan milega: "Full course Telegram group mein sequence-wise arranged milega, ek hi jagah sab kuch"
+- Koi pooche channel ban ho gaya to kya hoga: "Sir hamare saare members paid hain, koi report nahi karta. Aur hamare paas complete backup bhi hai, bilkul tension mat lo"
+- Koi live 2026 course maange: "Sir hum sirf completed course provide karte hain, payment ke baad full course turant mil jaata hai — koi wait nahi"
+- Koi Rodha ya alag Quants maange: "Sir yeh abhi available nahi hai, lekin EG ka course Quants ke liye bhi bahut better hai"
+
+FAQ:
+- Q: Course kahan milega? A: Full course Telegram group mein sequence-wise arranged milega
+- Q: Kya demo free hai? A: Haan, demo bilkul free hai — link bhej raha hoon
+- Q: Payment ke baad kitni der mein access milega? A: Instantly, screenshot bhejte hi
+- Q: Kya yeh live course hai? A: Nahi, yeh completed recorded course hai — isliye payment ke baad turant full course mil jaata hai
+- Q: Lifetime access milegi? A: Haan, one time payment mein lifetime access
+- Q: Channel ban ho gaya to? A: Tension mat lo, hamare saare members paid hain aur complete backup bhi hai
+
+# ================================================================
+#  SAVE KARO AUR BOT DOBARA CHALAO — BAS ITNA HI!
+# ================================================================
