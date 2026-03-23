@@ -8,7 +8,7 @@ import os
 BOT_TOKEN    = "7602960171:AAENSFjXspMuuKBdaLIDW1yVPcsvRWZm2EM"
 API_KEY      = "sk-NyILCdh7_VSR7tJhPw45npYufj5qroqwnW9-IjJ66nA"
 BASE_URL     = "https://freeaiapikey.com"
-LOG_GROUP_ID = -1003350702272
+OWNER_ID     = 7702284205   # Tera personal Telegram ID
 # ============================================================
 
 def load_course_info():
@@ -58,80 +58,63 @@ client = anthropic.Anthropic(api_key=API_KEY, base_url=BASE_URL)
 user_histories = {}
 blocked_users  = set()
 bot_stopped    = False
-user_topics    = {}
 
 # ============================================================
-#  TOPIC + LOG FUNCTIONS
+#  OWNER KO NOTIFICATION BHEJO
 # ============================================================
 
-def get_or_create_topic(user_id, user_name, username):
-    if user_id in user_topics:
-        return user_topics[user_id]
+def notify_owner(user_name, username, user_id, student_msg, bot_reply):
     try:
-        topic_name = f"👤 {user_name} | {user_id}"
-        result = bot.create_forum_topic(LOG_GROUP_ID, topic_name)
-        thread_id = result.message_thread_id
-        user_topics[user_id] = thread_id
-
         uname = f"@{username}" if username else "No username"
-        intro = (
+        text = (
+            f"👤 *{user_name}* | {uname}\n"
+            f"🆔 ID: `{user_id}`\n"
+            f"━━━━━━━━━━━━━━━━\n"
+            f"💬 *Student:*\n{student_msg}\n\n"
+            f"🤖 *Rishabh:*\n{bot_reply}\n"
+            f"━━━━━━━━━━━━━━━━\n"
+            f"🚫 Block: `/block {user_id}`"
+        )
+        bot.send_message(OWNER_ID, text, parse_mode="Markdown")
+    except Exception as e:
+        print(f"❌ Notification error: {e}")
+
+def notify_new_student(user_name, username, user_id):
+    try:
+        uname = f"@{username}" if username else "No username"
+        text = (
             f"🆕 *Naya Student Aaya!*\n\n"
             f"👤 *Naam:* {user_name}\n"
             f"🔗 *Username:* {uname}\n"
             f"🆔 *User ID:* `{user_id}`\n\n"
-            f"🚫 Block karo: `/block {user_id}`"
+            f"🚫 Block karo: `/block {user_id}`\n"
+            f"✅ Unblock karo: `/unblock {user_id}`"
         )
-        bot.send_message(
-            LOG_GROUP_ID, intro,
-            message_thread_id=thread_id,
-            parse_mode="Markdown"
-        )
-        print(f"✅ Naya topic bana: {topic_name} | thread_id={thread_id}")
-        return thread_id
+        bot.send_message(OWNER_ID, text, parse_mode="Markdown")
     except Exception as e:
-        print(f"❌ Topic error: {e}")
-        return None
-
-def log_chat(user_id, student_msg, bot_reply):
-    try:
-        thread_id = user_topics.get(user_id)
-        if not thread_id:
-            print(f"❌ thread_id nahi mila user {user_id} ke liye")
-            return
-        log_text = (
-            f"👨‍🎓 *Student:*\n{student_msg}\n\n"
-            f"🤖 *Rishabh (Bot):*\n{bot_reply}"
-        )
-        bot.send_message(
-            LOG_GROUP_ID, log_text,
-            message_thread_id=thread_id,
-            parse_mode="Markdown"
-        )
-        print(f"✅ Log bheja thread_id={thread_id}")
-    except Exception as e:
-        print(f"❌ Log error: {e}")
+        print(f"❌ New student notification error: {e}")
 
 # ============================================================
-#  OWNER COMMANDS — Monitoring group mein use karo
+#  OWNER COMMANDS — Apne personal chat mein use karo
 # ============================================================
 
-@bot.message_handler(commands=['stopbot'], chat_types=['group', 'supergroup'])
+@bot.message_handler(commands=['stopbot'])
 def stop_bot(message):
     global bot_stopped
-    if message.chat.id == LOG_GROUP_ID:
+    if message.from_user.id == OWNER_ID:
         bot_stopped = True
-        bot.reply_to(message, "🔴 *Bot band kar diya!*\nDobara chalu: `/startbot`", parse_mode="Markdown")
+        bot.reply_to(message, "🔴 *Bot band kar diya!*\nDobara chalu karne ke liye: `/startbot`", parse_mode="Markdown")
 
-@bot.message_handler(commands=['startbot'], chat_types=['group', 'supergroup'])
+@bot.message_handler(commands=['startbot'])
 def start_bot_again(message):
     global bot_stopped
-    if message.chat.id == LOG_GROUP_ID:
+    if message.from_user.id == OWNER_ID:
         bot_stopped = False
         bot.reply_to(message, "🟢 *Bot chalu ho gaya!*", parse_mode="Markdown")
 
-@bot.message_handler(commands=['block'], chat_types=['group', 'supergroup'])
+@bot.message_handler(commands=['block'])
 def block_user(message):
-    if message.chat.id == LOG_GROUP_ID:
+    if message.from_user.id == OWNER_ID:
         try:
             uid = int(message.text.split()[1])
             blocked_users.add(uid)
@@ -139,15 +122,26 @@ def block_user(message):
         except:
             bot.reply_to(message, "❌ Sahi format: `/block 123456789`", parse_mode="Markdown")
 
-@bot.message_handler(commands=['unblock'], chat_types=['group', 'supergroup'])
+@bot.message_handler(commands=['unblock'])
 def unblock_user(message):
-    if message.chat.id == LOG_GROUP_ID:
+    if message.from_user.id == OWNER_ID:
         try:
             uid = int(message.text.split()[1])
             blocked_users.discard(uid)
             bot.reply_to(message, f"✅ User `{uid}` unblock ho gaya!", parse_mode="Markdown")
         except:
             bot.reply_to(message, "❌ Sahi format: `/unblock 123456789`", parse_mode="Markdown")
+
+@bot.message_handler(commands=['status'])
+def status(message):
+    if message.from_user.id == OWNER_ID:
+        status_text = (
+            f"📊 *Bot Status*\n\n"
+            f"{'🔴 Band' if bot_stopped else '🟢 Chal raha hai'}\n"
+            f"👥 Total students: {len(user_histories)}\n"
+            f"🚫 Blocked users: {len(blocked_users)}"
+        )
+        bot.reply_to(message, status_text, parse_mode="Markdown")
 
 # ============================================================
 #  AI REPLY
@@ -174,8 +168,10 @@ def get_ai_reply(user_id, user_message):
         return "Sorry, thoda technical issue aa gaya. Ek baar phir try karo! 🙏"
 
 # ============================================================
-#  STUDENT MESSAGES — Sirf private chat
+#  STUDENT MESSAGES
 # ============================================================
+
+seen_users = set()  # Naye students track karne ke liye
 
 @bot.message_handler(commands=['start'], chat_types=['private'])
 def start(message):
@@ -185,8 +181,10 @@ def start(message):
     user_name = message.from_user.first_name or "Student"
     username  = message.from_user.username
 
-    # Topic banao
-    get_or_create_topic(user_id, user_name, username)
+    # Pehli baar aaya hai toh notify karo
+    if user_id not in seen_users:
+        seen_users.add(user_id)
+        notify_new_student(user_name, username, user_id)
 
     welcome = f"""Heyy {user_name}! 👋
 
@@ -206,24 +204,24 @@ def handle_message(message):
     user_id   = message.from_user.id
     if user_id in blocked_users:
         return
+
     user_name = message.from_user.first_name or "Student"
     username  = message.from_user.username
     user_text = message.text
 
-    # Topic nahi hai toh banao
-    if user_id not in user_topics:
-        get_or_create_topic(user_id, user_name, username)
+    # Pehli baar message kar raha hai
+    if user_id not in seen_users:
+        seen_users.add(user_id)
+        notify_new_student(user_name, username, user_id)
 
     bot.send_chat_action(message.chat.id, 'typing')
     reply = get_ai_reply(user_id, user_text)
     bot.send_message(message.chat.id, reply)
 
-    # Log karo monitoring group mein
-    log_chat(user_id, user_text, reply)
+    # Tere Telegram pe notification bhejo
+    notify_owner(user_name, username, user_id, user_text, reply)
 
 print("✅ HY CAT Course Bot chal gaya!")
-print("📊 Monitoring group mein saari chats dikhegi.")
-print("🚫 /stopbot  — bot band karo")
-print("🟢 /startbot — bot chalu karo")
-print("🚫 /block ID — user block karo")
+print("📲 Har chat teri Telegram pe aayegi!")
+print("Commands: /stopbot /startbot /block ID /unblock ID /status")
 bot.infinity_polling()
